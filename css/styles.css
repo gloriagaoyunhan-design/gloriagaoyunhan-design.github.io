@@ -1558,6 +1558,251 @@ h1, h2, h3, p { margin: 0; }
 /* Copy still to be written — visible on the page so it can't be forgotten. */
 .cs-todo { color: var(--color-stroke); }
 
+/* ---------- Before/after compare slider ----------
+   Two screenshots stacked in one frame; the top one is clipped at --pos so
+   dragging the handle wipes between them. The range input is the real
+   control — invisible but full-size, so it comes with drag, keyboard and
+   screen-reader support for free; everything visible is painted beneath it.
+   Not a .cs-figure: these must not open the lightbox, since a click here is
+   the start of a drag. */
+.cs-compare {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid var(--color-stroke);
+  background: var(--color-surface);
+  touch-action: pan-y;
+  --pos: 50%;
+}
+.cs-compare img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* Top-aligned rather than centred: both screens are captured from the top
+     of the page, so this compares like with like — and the legacy form
+     running past the bottom edge is the honest version of it. */
+  object-fit: cover;
+  object-position: top center;
+  pointer-events: none;
+  user-select: none;
+}
+.cs-compare-after { clip-path: inset(0 0 0 var(--pos)); }
+.cs-compare-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--pos);
+  width: 2px;
+  background: var(--color-bg);
+  transform: translateX(-1px);
+  pointer-events: none;
+}
+.cs-compare-handle::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--color-bg);
+  border: 1px solid var(--color-stroke);
+  box-shadow: 0 2px 10px rgba(26, 23, 20, 0.18);
+}
+/* The grab arrows, drawn in CSS so the handle needs no extra markup */
+.cs-compare-handle::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  width: 16px;
+  height: 8px;
+  transform: translate(-50%, -50%);
+  background: var(--color-ink);
+  clip-path: polygon(4px 0, 0 50%, 4px 100%, 4px 60%, 12px 60%, 12px 100%, 16px 50%, 12px 0, 12px 40%, 4px 40%);
+}
+.cs-compare-label {
+  position: absolute;
+  top: 16px;
+  z-index: 2;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  background: rgba(26, 23, 20, 0.82);
+  color: var(--color-bg);
+  font-family: var(--font-mono);
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-line);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  pointer-events: none;
+}
+.cs-compare-label--before { left: 16px; }
+.cs-compare-label--after { right: 16px; }
+.cs-compare-range {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: ew-resize;
+}
+/* The thumb is the full height of the frame but invisible — the visible
+   handle above is what the reader actually sees tracking their drag. */
+.cs-compare-range::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 44px;
+  height: 400px;
+  background: transparent;
+  cursor: ew-resize;
+}
+.cs-compare-range::-moz-range-thumb {
+  width: 44px;
+  height: 400px;
+  border: none;
+  background: transparent;
+  cursor: ew-resize;
+}
+.cs-compare-range:focus { outline: none; }
+.cs-compare-range:focus-visible ~ .cs-compare-handle::after {
+  border-color: var(--color-red);
+  box-shadow: 0 0 0 3px rgba(239, 62, 46, 0.35);
+}
+
+/* ---------- Iteration stepper ----------
+   One screen at a time with its own notes beside it, stepped through by a
+   range input with a labelled tick per iteration. Same reasoning as the
+   compare slider: the range is the control, the ticks are buttons so a
+   reader can jump straight to an iteration instead of dragging past it. */
+.cs-iter {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.cs-iter-stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--color-surface);
+  border: 1px solid var(--color-stroke);
+  overflow: hidden;
+}
+.cs-iter-stage img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+.cs-iter-stage img.is-active { opacity: 1; }
+.cs-iter-panel { display: none; }
+.cs-iter-panel.is-active { display: block; }
+/* The global reset zeroes heading and paragraph margins, so the panel sets
+   its own rhythm between the title, the summary and the two lists. */
+.cs-iter-panel .cs-h4 { margin-bottom: 10px; }
+.cs-iter-panel > p { margin-bottom: 24px; }
+.cs-iter-num {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption-size);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-red);
+  margin-bottom: 8px;
+}
+.cs-iter-list { list-style: none; margin: 0 0 20px; padding: 0; }
+.cs-iter-list li {
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 8px;
+  font-size: var(--text-body-sm-size);
+  line-height: var(--text-body-sm-line);
+  color: var(--color-text-secondary);
+}
+.cs-iter-list li::before {
+  position: absolute;
+  left: 0;
+  font-family: var(--font-mono);
+}
+.cs-iter-list--pro li::before { content: "+"; color: var(--tag-blue-fg); }
+.cs-iter-list--con li::before { content: "−"; color: var(--color-red); }
+.cs-iter-list-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption-size);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  margin-bottom: 8px;
+}
+
+/* Track sits under the stage, spanning only the image column */
+.cs-iter-track { margin-top: 24px; position: relative; }
+.cs-iter-range {
+  display: block;
+  width: 100%;
+  margin: 0;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+.cs-iter-range::-webkit-slider-runnable-track {
+  height: 2px;
+  background: var(--color-stroke);
+}
+.cs-iter-range::-moz-range-track { height: 2px; background: var(--color-stroke); }
+.cs-iter-range::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  margin-top: -8px;
+  border-radius: 50%;
+  background: var(--color-red);
+  border: 2px solid var(--color-bg);
+  box-shadow: 0 1px 6px rgba(26, 23, 20, 0.25);
+  cursor: grab;
+}
+.cs-iter-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-red);
+  border: 2px solid var(--color-bg);
+  cursor: grab;
+}
+.cs-iter-ticks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+.cs-iter-tick {
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption-size);
+  letter-spacing: 0.06em;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: color .15s;
+}
+.cs-iter-tick:hover { color: var(--color-ink); }
+.cs-iter-tick.is-active { color: var(--color-red); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-iter-stage img { transition: none; }
+}
+
 /* ---------- Case study page — responsive ---------- */
 /* Below this the left column is too narrow to hold a title or a nav, so
    both grids collapse: the hero image drops under the header text, and the
@@ -1595,6 +1840,13 @@ h1, h2, h3, p { margin: 0; }
   .cs-quote { padding-left: 20px; margin-top: 32px; }
   .cs-quote p { font-size: 22px; line-height: 32px; }
   .cs-principles { gap: 32px; }
+  /* Notes drop under the screen they describe; the track keeps its own
+     column so the ticks stay reachable with a thumb. */
+  .cs-iter { grid-template-columns: 1fr; gap: 28px; }
+  .cs-compare { aspect-ratio: 4 / 3; }
+  .cs-compare-label { top: 10px; padding: 5px 10px; }
+  .cs-compare-label--before { left: 10px; }
+  .cs-compare-label--after { right: 10px; }
   .cs-principles li { grid-template-columns: 40px 1fr; gap: 14px; }
   .cs-pagenav { margin-top: 56px; padding: 40px 0 64px; }
 }

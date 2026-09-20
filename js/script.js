@@ -18,6 +18,8 @@
       overlay (case-*.html and the about page's gallery)
   11. "See other works" carousel — arrow controls for the card strip that
       closes every case study
+  12. Before/after compare slider — drag to wipe between two screenshots
+  13. Iteration stepper — step through design iterations, one at a time
    ========================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -561,5 +563,47 @@ document.addEventListener('DOMContentLoaded', () => {
     if ('ResizeObserver' in window) new ResizeObserver(syncArrows).observe(track);
     window.addEventListener('resize', syncArrows);
     syncArrows();
+  });
+
+  /* ---------- 12. Before/after compare slider ----------
+     The range input is the whole control — drag, arrow keys and screen
+     reader support come with it. All this does is mirror its value onto
+     --pos, which the CSS uses to clip the top image and move the handle. */
+  $$('[data-compare]').forEach((compare) => {
+    const range = compare.querySelector('[data-compare-range]');
+    if (!range) return;
+    const sync = () => { compare.style.setProperty('--pos', range.value + '%'); };
+    range.addEventListener('input', sync);
+    sync();
+  });
+
+  /* ---------- 13. Iteration stepper ----------
+     Steps through one design iteration at a time: the range is the primary
+     control, and each tick is also a button so a reader can jump straight
+     to an iteration rather than dragging past the ones in between. */
+  $$('[data-iter]').forEach((group) => {
+    const range = group.querySelector('[data-iter-range]');
+    const shots = Array.from(group.querySelectorAll('[data-iter-shot]'));
+    const panels = Array.from(group.querySelectorAll('[data-iter-panel]'));
+    const ticks = Array.from(group.querySelectorAll('[data-iter-tick]'));
+    if (!range || !shots.length) return;
+
+    function show(index) {
+      shots.forEach((el, i) => el.classList.toggle('is-active', i === index));
+      panels.forEach((el, i) => el.classList.toggle('is-active', i === index));
+      ticks.forEach((el, i) => {
+        el.classList.toggle('is-active', i === index);
+        el.setAttribute('aria-pressed', i === index ? 'true' : 'false');
+      });
+    }
+
+    range.addEventListener('input', () => { show(Number(range.value) - 1); });
+    ticks.forEach((tick, i) => {
+      tick.addEventListener('click', () => {
+        range.value = String(i + 1);
+        show(i);
+      });
+    });
+    show(Number(range.value) - 1);
   });
 });
