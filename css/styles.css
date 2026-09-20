@@ -1558,6 +1558,21 @@ h1, h2, h3, p { margin: 0; }
 /* Copy still to be written — visible on the page so it can't be forgotten. */
 .cs-todo { color: var(--color-stroke); }
 
+/* ---------- Stacked block rhythm ----------
+   The global reset zeroes paragraph margins and .cs-figure carries none of
+   its own, so a column of copy and media sits flush without this. The older
+   sections on these pages do the same job with inline margins on their
+   wrappers; this keeps it in one place now the pattern repeats. */
+.cs-stack + .cs-stack { margin-top: 56px; }
+/* Matches the gap the solution blocks already keep between themselves. */
+.cs-stack + .cs-solution { margin-top: 96px; }
+.cs-stack > .cs-body + .cs-body { margin-top: 20px; }
+.cs-stack > .cs-body + .cs-figure,
+.cs-stack > .cs-figure + .cs-body,
+.cs-stack > .cs-body + .cs-compare,
+.cs-stack > .cs-iter,
+.cs-stack > .cs-iter + .cs-body { margin-top: 32px; }
+
 /* ---------- Before/after compare slider ----------
    Two screenshots stacked in one frame; the top one is clipped at --pos so
    dragging the handle wipes between them. The range input is the real

@@ -14,7 +14,7 @@
 
 <!-- ?v= is a cache-buster: bump the number whenever styles.css changes so browsers
      fetch the new file instead of reusing the copy they already have. -->
-<link rel="stylesheet" href="css/styles.css?v=59">
+<link rel="stylesheet" href="css/styles.css?v=60">
 </head>
 <body>
 
@@ -282,7 +282,7 @@
     <!-- The whole journey first, then the screens that make it up — so the
          four solutions below read as parts of one flow rather than
          standalone screens. -->
-    <div data-reveal>
+    <div class="cs-stack" data-reveal>
       <h3 class="cs-h3">The journey, before and after</h3>
       <p class="cs-body">The legacy flow ran nine sequential steps, four of them waiting on a person: an account manager review, a follow-up on the trader’s KYC, and a CS review before approval. Nothing could start until all of it finished. The new flow moves the account set-up to automation, hands over the referral link straight after registration, and defers KYC and the questionnaire to a second pass the partner can take in their own time.</p>
       <figure class="cs-figure cs-figure--plain">
@@ -346,13 +346,13 @@
        verification steps are tracked from then on. The stepper below is
        driven by section 13 of js/script.js. -->
   <section class="cs-section" id="iterations">
-    <div data-reveal>
+    <div class="cs-stack" data-reveal>
       <div class="cs-label">Iterations</div>
       <h2 class="cs-h2">Working out the hand-off</h2>
       <p class="cs-body">Registration now finishes in seconds, but two things behind it do not: the rebate account takes a minute or two to provision, and identity verification is a separate review again. That left a gap to design for — what a partner sees between “I’ve signed up” and “I can actually refer someone”.</p>
     </div>
 
-    <div data-reveal>
+    <div class="cs-stack" data-reveal>
       <h3 class="cs-h3">Where the partner lands after registering</h3>
       <p class="cs-body">Four passes at the same moment, each making a different trade between handing over the referral link early and being honest about the set-up still running.</p>
 
@@ -434,7 +434,7 @@
       <p class="cs-body cs-todo">Decision and trade-off — to write: which iteration shipped, and what it gave up in exchange. This is the paragraph the portfolio panel is looking for, so name the alternatives, the reason for the call, and who was in the room for it.</p>
     </div>
 
-    <div data-reveal>
+    <div class="cs-stack" data-reveal>
       <h3 class="cs-h3">The widget that tracks what’s left</h3>
       <p class="cs-body">Verification is two separate submissions — identity, and the business questionnaire — each asking for a different set of information and each going to its own admin review. So the widget could not be one progress bar: partners needed the two tracked independently, a natural break between them, and a standing list of what was still outstanding.</p>
       <figure class="cs-figure cs-figure--plain">
@@ -448,7 +448,7 @@
   <!-- ==================== VISUAL CRAFT ====================
        The before/after wipe is driven by section 12 of js/script.js. -->
   <section class="cs-section" id="craft">
-    <div data-reveal>
+    <div class="cs-stack" data-reveal>
       <div class="cs-label">Visual craft</div>
       <h2 class="cs-h2">Rebuilding the application form</h2>
       <p class="cs-body">The legacy application was a single accordion inside the client portal: every section open on one page, a free-text box for anything the form could not model, and no way to save and come back. It was all-or-nothing by construction — you could not leave it half done, so partners who stalled on one field abandoned the whole thing.</p>
