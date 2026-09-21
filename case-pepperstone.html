@@ -14,7 +14,7 @@
 
 <!-- ?v= is a cache-buster: bump the number whenever styles.css changes so browsers
      fetch the new file instead of reusing the copy they already have. -->
-<link rel="stylesheet" href="css/styles.css?v=67">
+<link rel="stylesheet" href="css/styles.css?v=68">
 </head>
 <body>
 
@@ -152,7 +152,6 @@
           <li><a href="#principles">Design Principles</a></li>
           <li><a href="#solution">Solution</a></li>
           <li><a href="#iterations">Iterations</a></li>
-          <li><a href="#craft">Visual Craft</a></li>
           <li><a href="#impact">What We Improved</a></li>
           <li><a href="#finding">A New Bottleneck</a></li>
         </ul>
@@ -298,6 +297,27 @@
       <h2 class="cs-h2">Solution</h2>
     </div>
 
+    <!-- The before/after wipe is driven by section 12 of js/script.js. It is
+         deliberately not a .cs-figure: a click on it is the start of a drag,
+         so it must not open the lightbox. -->
+    <div class="cs-solution" data-reveal>
+      <div>
+        <h3 class="cs-h3">Redesigning a legacy application form</h3>
+        <p class="cs-body">The legacy onboarding flow was built on an extremely outdated design system. Although the rebuild upgraded the page to the latest DS with existing components, conscious design decisions were actively made: the structure of the forms, how to show progress and manage expectations, where the form breaks, and what each screen asks.</p>
+      </div>
+      <div>
+        <div class="cs-compare" data-compare>
+          <img class="cs-compare-before" src="assets/pepperstone/form-before.png" alt="The legacy application form: a dense accordion inside the secure client area, with program information, personal details and ID verification all stacked on one page and a dozen fields visible at once" loading="lazy" decoding="async" width="2160" height="2352">
+          <img class="cs-compare-after" src="assets/pepperstone/form-after.png" alt="The rebuilt form: a single centred card headed “About your business” asking three questions, with a section progress bar above it and save and continue at the foot" loading="lazy" decoding="async" width="1920" height="1164">
+          <span class="cs-compare-label cs-compare-label--before">Before</span>
+          <span class="cs-compare-label cs-compare-label--after">After</span>
+          <input class="cs-compare-range" type="range" min="0" max="100" step="0.1" value="50" data-compare-range aria-label="Drag to compare the legacy form with the rebuilt form">
+          <span class="cs-compare-handle" aria-hidden="true"></span>
+        </div>
+        <p class="cs-caption">Before and after comparison of the application form</p>
+      </div>
+    </div>
+
     <div class="cs-solution" data-reveal>
       <div>
         <h3 class="cs-h3">Immediate activation after registration</h3>
@@ -410,27 +430,6 @@
         <img src="assets/pepperstone/widget-iterations.png?v=2" alt="Three annotated designs of the onboarding widget. Iteration 01: a single banner reading “Complete your IB profile to enjoy full functionality” with one complete registration button, criticised for having no clear indication of steps and an ambiguous description of what is left. Iteration 02: a stepper headed “Unlock the complete IB functionality in 2 steps” with a get started button, which works better with three or more steps and has no need to scale here. The shipped version: a two-column to-do list with “Verify your identity” marked complete and “Submit your business details” with its own complete now button, giving a clear indication of to-dos and their own statuses." loading="lazy" decoding="async" width="1620" height="1080">
         <figcaption class="cs-caption">Design exploration of the onboarding widget</figcaption>
       </figure>
-    </div>
-  </section>
-
-  <!-- ==================== VISUAL CRAFT ====================
-       The before/after wipe is driven by section 12 of js/script.js. -->
-  <section class="cs-section" id="craft">
-    <div class="cs-stack" data-reveal>
-      <div class="cs-label">Visual craft</div>
-      <h2 class="cs-h2">Rebuilding the application form</h2>
-      <p class="cs-body">The legacy application was a single accordion inside the client portal: every section open on one page, a free-text box for anything the form could not model, and no way to save and come back. It was all-or-nothing by construction — you could not leave it half done, so partners who stalled on one field abandoned the whole thing.</p>
-      <p class="cs-body">The rebuild sits on a newer version of the design system, so the inputs, buttons and progress components came from the library. The structure did not: splitting the application into three sittings, the two levels of progress, where the form breaks, what each screen asks for and the order it asks in were all design decisions on this project.</p>
-
-      <div class="cs-compare" data-compare>
-        <img class="cs-compare-before" src="assets/pepperstone/form-before.png" alt="The legacy application form: a dense accordion inside the secure client area, with program information, personal details and ID verification all stacked on one page and a dozen fields visible at once" loading="lazy" decoding="async" width="2160" height="2352">
-        <img class="cs-compare-after" src="assets/pepperstone/form-after.png" alt="The rebuilt form: a single centred card headed “About your business” asking three questions, with a section progress bar above it and save and continue at the foot" loading="lazy" decoding="async" width="1920" height="1164">
-        <span class="cs-compare-label cs-compare-label--before">Before</span>
-        <span class="cs-compare-label cs-compare-label--after">After</span>
-        <input class="cs-compare-range" type="range" min="0" max="100" step="0.1" value="50" data-compare-range aria-label="Drag to compare the legacy form with the rebuilt form">
-        <span class="cs-compare-handle" aria-hidden="true"></span>
-      </div>
-      <p class="cs-caption">Drag the handle to compare. Both screens are shown from the top of the page — the legacy form carried on for roughly another two screens below this crop, which is the part that made it feel unfinishable.</p>
     </div>
   </section>
 
@@ -594,6 +593,6 @@
 
 </div>
 
-<script src="js/script.js?v=58"></script>
+<script src="js/script.js?v=59"></script>
 </body>
 </html>

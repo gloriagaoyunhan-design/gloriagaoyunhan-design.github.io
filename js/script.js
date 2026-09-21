@@ -568,12 +568,30 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- 12. Before/after compare slider ----------
      The range input is the whole control — drag, arrow keys and screen
      reader support come with it. All this does is mirror its value onto
-     --pos, which the CSS uses to clip the top image and move the handle. */
+     --pos, which the CSS uses to clip the top image and move the handle,
+     and fade out whichever tag the split line has reached: each sits fixed
+     in its own corner, so left where it is it would end up labelling the
+     wrong screenshot. Measured in pixels from the tags' real positions,
+     since the frame (and so the split's distance from a corner) resizes. */
   $$('[data-compare]').forEach((compare) => {
     const range = compare.querySelector('[data-compare-range]');
     if (!range) return;
-    const sync = () => { compare.style.setProperty('--pos', range.value + '%'); };
+    const tagBefore = compare.querySelector('.cs-compare-label--before');
+    const tagAfter = compare.querySelector('.cs-compare-label--after');
+    const CLEARANCE = 12; // px the line may come within before the tag goes
+
+    const sync = () => {
+      compare.style.setProperty('--pos', range.value + '%');
+      const splitX = compare.clientWidth * (range.value / 100);
+      if (tagBefore) {
+        tagBefore.classList.toggle('is-hidden', splitX < tagBefore.offsetLeft + tagBefore.offsetWidth + CLEARANCE);
+      }
+      if (tagAfter) {
+        tagAfter.classList.toggle('is-hidden', splitX > tagAfter.offsetLeft - CLEARANCE);
+      }
+    };
     range.addEventListener('input', sync);
+    window.addEventListener('resize', sync);
     sync();
   });
 

@@ -1581,7 +1581,6 @@ h1, h2, h3, p { margin: 0; }
   position: relative;
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  border: 1px solid var(--color-stroke);
   background: var(--color-surface);
   touch-action: pan-y;
   --pos: 50%;
@@ -1606,7 +1605,7 @@ h1, h2, h3, p { margin: 0; }
   bottom: 0;
   left: var(--pos);
   width: 2px;
-  background: var(--color-bg);
+  background: var(--color-stroke);
   transform: translateX(-1px);
   pointer-events: none;
 }
@@ -1653,6 +1652,11 @@ h1, h2, h3, p { margin: 0; }
 }
 .cs-compare-label--before { left: 16px; }
 .cs-compare-label--after { right: 16px; }
+/* Each tag lives in its own corner, so once the split line is dragged up to
+   it the tag would be floating over the wrong screenshot — script.js fades
+   it out instead. */
+.cs-compare-label { transition: opacity .2s ease; }
+.cs-compare-label.is-hidden { opacity: 0; }
 .cs-compare-range {
   position: absolute;
   inset: 0;
@@ -1846,6 +1850,7 @@ h1, h2, h3, p { margin: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   .cs-iter-stage img { transition: none; }
+  .cs-compare-label { transition: none; }
 }
 
 /* ---------- Case study page — responsive ---------- */
