@@ -360,7 +360,7 @@
 
     <div class="cs-stack" data-reveal>
       <h3 class="cs-h3">Designing for waiting</h3>
-      <p class="cs-body">I initially assumed the referral link would be ready the moment registration ended. In tech review, the developers flagged that account set-up runs in several steps and can take 1–2 minutes, so the wait needed a screen that sets expectations.</p>
+      <p class="cs-body">My initial assumption was that the referral link would be ready immediately after registration. In tech review, the developers flagged that account set-up runs in several steps and can take 1–2 minutes, so we need a screen that sets expectations for the wait.</p>
 
       <div class="cs-iter" data-iter>
         <div class="cs-iter-stage">
@@ -385,8 +385,8 @@
           </div>
         </div>
           <div class="cs-iter-panel is-active" data-iter-panel>
-            <h4 class="cs-h4">Link first, verification as an upgrade</h4>
-            <p class="cs-body-sm">Hands over the referral link the moment registration completes, and frames the remaining verification as unlocking withdrawals and higher tiers rather than as a gate.</p>
+            <h4 class="cs-h4">I assumed no wait time for referral link creation</h4>
+            <p class="cs-body-sm">With the assumption, I designed the success screen for a strong call-to-action of starting referral and completing verification.</p>
             <div class="cs-iter-cols">
               <div>
                 <div class="cs-iter-list-label">What worked</div>
@@ -403,8 +403,8 @@
             </div>
           </div>
           <div class="cs-iter-panel" data-iter-panel>
-            <h4 class="cs-h4">Hold the partner until set-up finishes</h4>
-            <p class="cs-body-sm">Acknowledges the provisioning wait directly, names how long it takes and promises an email — but parks the partner on a dead-end screen while it runs.</p>
+            <h4 class="cs-h4">Let’s just add a loader</h4>
+            <p class="cs-body-sm">With the set-up taking time, my initial draft was to add a simple loading screen. This version quickly dies as it lacks feedback and might lead to partners abandoning and never returning.</p>
             <div class="cs-iter-cols">
               <div>
                 <div class="cs-iter-list-label">What worked</div>
@@ -421,8 +421,8 @@
             </div>
           </div>
           <div class="cs-iter-panel" data-iter-panel>
-            <h4 class="cs-h4">Wait inside the dashboard</h4>
-            <p class="cs-body-sm">Drops the partner straight into the portal with the set-up running as a banner, so the wait is spent somewhere useful — at the cost of a first impression made entirely of zeros and empty tables.</p>
+            <h4 class="cs-h4">Offer alternatives to explore the portal</h4>
+            <p class="cs-body-sm">I then explored redirecting the user to the actual portal to explore while we set up their accounts. However, with the partner info being initialized, there’s not much to show in the portal and thus not much value can be added.</p>
             <div class="cs-iter-cols">
               <div>
                 <div class="cs-iter-list-label">What worked</div>
@@ -439,8 +439,8 @@
             </div>
           </div>
           <div class="cs-iter-panel" data-iter-panel>
-            <h4 class="cs-h4">Name each step as it completes</h4>
-            <p class="cs-body-sm">Breaks the wait into the work actually happening — link, profile, rebate account, dashboard — so progress is legible instead of an unexplained spinner.</p>
+            <h4 class="cs-h4">Communicating progress for a 2 min wait</h4>
+            <p class="cs-body-sm">Since 1–2 min is not too long a wait time, I added visual cues of sub-steps with a growing overall progress to keep the user engaged on screen. Email notification upon successful set up was also implemented as a back-up in case they forgot to return.</p>
             <div class="cs-iter-cols">
               <div>
                 <div class="cs-iter-list-label">What worked</div>
