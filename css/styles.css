@@ -1812,12 +1812,14 @@ h1, h2, h3, p { margin: 0; }
 .cs-iter-tick.is-active { color: var(--color-red); }
 
 /* Notes for the iteration on screen */
-.cs-iter-panel { display: none; margin-top: 32px; }
+.cs-iter-panel { display: none; margin-top: 32px; text-align: center; }
 .cs-iter-panel.is-active { display: block; }
 /* The global reset zeroes heading and paragraph margins, so the panel sets
-   its own gap between the title and the summary. */
+   its own gap between the title and the summary. The summary is capped for
+   readability, so it needs auto side margins to stay on the slider's centre
+   line rather than hugging the left of its box. */
 .cs-iter-panel .cs-h4 { margin-bottom: 10px; }
-.cs-iter-panel > p { max-width: 640px; }
+.cs-iter-panel > p { max-width: 640px; margin-inline: auto; }
 
 @media (prefers-reduced-motion: reduce) {
   .cs-iter-stage img { transition: none; }
