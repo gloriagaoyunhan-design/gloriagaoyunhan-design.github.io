@@ -19,7 +19,7 @@
 
   /* Warm neutrals */
   --color-bg: #fffbf3;
-  --color-surface: #ede8df;
+  --color-surface: #f2eee7;
   --color-stroke: #b5afa5;
   --color-text-secondary: #6b655c;
   --color-ink: #1a1714;
@@ -1690,20 +1690,23 @@ h1, h2, h3, p { margin: 0; }
 }
 
 /* ---------- Iteration stepper ----------
-   One screen at a time, stacked: the screen, then the slider that steps
-   through it, then that iteration's notes. The range input is the real
-   control (drag, arrow keys, screen readers) and sits over a rail of dots,
-   one per iteration, so the unselected ones read as places you can go. The
-   labels underneath are buttons, so a reader can jump straight to an
-   iteration instead of dragging past the ones in between. */
-.cs-iter { display: block; }
+   A card on the surface colour: the screen, the slider that steps through
+   it, then that iteration's title and description, with 24px padding and
+   24px between each. The range input is the real control (drag, arrow keys,
+   screen readers) and sits over a rail of dots, one per iteration, so the
+   unselected ones read as places you can go. The labels underneath are
+   buttons, so a reader can jump straight to an iteration instead of
+   dragging past the ones in between. */
+.cs-iter {
+  display: block;
+  padding: 24px;
+  background: var(--color-surface);
+}
 .cs-iter-stage {
   position: relative;
   /* Every iteration is exported at the same 1920x1012, so the frame matches
      it exactly and nothing letterboxes. */
   aspect-ratio: 1920 / 1012;
-  background: var(--color-surface);
-  border: 1px solid var(--color-stroke);
   overflow: hidden;
 }
 .cs-iter-stage img {
@@ -1720,18 +1723,23 @@ h1, h2, h3, p { margin: 0; }
 }
 .cs-iter-stage img.is-active { opacity: 1; pointer-events: auto; cursor: zoom-in; }
 
-/* Track: a rail of four dots with the range laid over it, labels below.
-   The dots sit at 12.5%, 37.5%, 62.5% and 87.5% — the centres of four
-   equal columns — and the range is inset and widened by the thumb's
-   radius so its thumb lands on those same points at each step. */
-.cs-iter-track { margin-top: 24px; }
-.cs-iter-rail { position: relative; height: 24px; }
+/* Track: the rail runs the full width of the card, with a dot at each end
+   and two between. The dots are 9px in from the edges (the thumb's radius)
+   and spaced evenly across what's left, and the range spans the whole width,
+   so its thumb lands on those same points at each step. The rail is exactly
+   the thumb's height so the 24px above it is the visible gap; the range
+   reaches 8px past it each way, purely to give a fingertip something to hit. */
+.cs-iter-track {
+  margin-top: 24px;
+  container-type: inline-size;
+}
+.cs-iter-rail { position: relative; height: 18px; }
 .cs-iter-rail::before {
   content: "";
   position: absolute;
   top: 50%;
-  left: 12.5%;
-  right: 12.5%;
+  left: 9px;
+  right: 9px;
   height: 2px;
   transform: translateY(-50%);
   background: var(--color-stroke);
@@ -1746,16 +1754,16 @@ h1, h2, h3, p { margin: 0; }
   background: var(--color-bg);
   border: 2px solid var(--color-stroke);
 }
-.cs-iter-dot:nth-of-type(1) { left: 12.5%; }
-.cs-iter-dot:nth-of-type(2) { left: 37.5%; }
-.cs-iter-dot:nth-of-type(3) { left: 62.5%; }
-.cs-iter-dot:nth-of-type(4) { left: 87.5%; }
+.cs-iter-dot:nth-of-type(1) { left: 9px; }
+.cs-iter-dot:nth-of-type(2) { left: calc(9px + (100% - 18px) / 3); }
+.cs-iter-dot:nth-of-type(3) { left: calc(9px + (100% - 18px) * 2 / 3); }
+.cs-iter-dot:nth-of-type(4) { left: calc(100% - 9px); }
 .cs-iter-range {
   position: absolute;
-  top: 0;
-  left: calc(12.5% - 9px);
-  width: calc(75% + 18px);
-  height: 100%;
+  top: -8px;
+  left: 0;
+  width: 100%;
+  height: 34px;
   margin: 0;
   padding: 0;
   background: transparent;
@@ -1763,14 +1771,14 @@ h1, h2, h3, p { margin: 0; }
   -webkit-appearance: none;
   cursor: pointer;
 }
-.cs-iter-range::-webkit-slider-runnable-track { height: 24px; background: transparent; }
-.cs-iter-range::-moz-range-track { height: 24px; background: transparent; }
+.cs-iter-range::-webkit-slider-runnable-track { height: 34px; background: transparent; }
+.cs-iter-range::-moz-range-track { height: 34px; background: transparent; }
 .cs-iter-range::-webkit-slider-thumb {
   appearance: none;
   -webkit-appearance: none;
   width: 18px;
   height: 18px;
-  margin-top: 3px;
+  margin-top: 8px;
   border-radius: 50%;
   background: var(--color-red);
   border: 2px solid var(--color-bg);
@@ -1789,16 +1797,16 @@ h1, h2, h3, p { margin: 0; }
 .cs-iter-range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px rgba(239, 62, 46, 0.35); }
 .cs-iter-range:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px rgba(239, 62, 46, 0.35); }
 
-.cs-iter-ticks {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  margin-top: 8px;
-}
+/* Labels sit under their dots: the middle two centred on theirs, the outer
+   two pinned to the card's edges so they line up with the image above. */
+.cs-iter-ticks { position: relative; height: 16px; margin-top: 12px; }
 .cs-iter-tick {
-  padding: 4px 0;
+  position: absolute;
+  top: 0;
+  padding: 0;
   border: none;
   background: none;
-  text-align: center;
+  white-space: nowrap;
   font-family: var(--font-mono);
   font-size: var(--text-caption-size);
   line-height: var(--text-caption-line);
@@ -1808,18 +1816,33 @@ h1, h2, h3, p { margin: 0; }
   cursor: pointer;
   transition: color .15s;
 }
+.cs-iter-tick:nth-child(1) { left: 0; text-align: left; }
+.cs-iter-tick:nth-child(2) { left: calc(9px + (100% - 18px) / 3); transform: translateX(-50%); }
+.cs-iter-tick:nth-child(3) { left: calc(9px + (100% - 18px) * 2 / 3); transform: translateX(-50%); }
+.cs-iter-tick:nth-child(4) { right: 0; text-align: right; }
 .cs-iter-tick:hover { color: var(--color-ink); }
 .cs-iter-tick.is-active { color: var(--color-red); }
 
-/* Notes for the iteration on screen */
-.cs-iter-panel { display: none; margin-top: 32px; text-align: center; }
+/* Sized by the card, not the viewport: four one-line "Iteration 01" labels
+   need about 480px of track to keep a sensible gap between neighbours; below
+   that the word sits above the number, and below ~310px the type tightens a
+   little more. */
+@container (max-width: 480px) {
+  .cs-iter-ticks { height: 32px; }
+  .cs-iter-tick-word { display: block; }
+}
+@container (max-width: 311px) {
+  .cs-iter-tick { font-size: 11px; letter-spacing: 0.02em; }
+}
+
+/* Title and description for the iteration on screen */
+.cs-iter-panel { display: none; margin-top: 24px; }
 .cs-iter-panel.is-active { display: block; }
-/* The global reset zeroes heading and paragraph margins, so the panel sets
-   its own gap between the title and the summary. The summary is capped for
-   readability, so it needs auto side margins to stay on the slider's centre
-   line rather than hugging the left of its box. */
-.cs-iter-panel .cs-h4 { margin-bottom: 10px; }
-.cs-iter-panel > p { max-width: 640px; margin-inline: auto; }
+/* The global reset zeroes h1-h3 and p margins but not h4's, so the browser's
+   default top margin would otherwise win over the panel's own 24px. Set the
+   whole margin here: 0 above, 8px between the title and the description. */
+.cs-iter-panel .cs-h4 { margin: 0 0 8px; }
+.cs-iter-panel > p { max-width: 640px; }
 
 @media (prefers-reduced-motion: reduce) {
   .cs-iter-stage img { transition: none; }
@@ -1871,9 +1894,6 @@ h1, h2, h3, p { margin: 0; }
 }
 
 @media (max-width: 480px) {
-  /* "Iteration 01" won't fit four across at this width, so the word sits
-     above the number. */
-  .cs-iter-tick-word { display: block; }
   .cs-title { font-size: 32px; line-height: 40px; }
   .cs-h2 { font-size: 24px; line-height: 32px; }
   .cs-h3 { font-size: 20px; line-height: 28px; }
