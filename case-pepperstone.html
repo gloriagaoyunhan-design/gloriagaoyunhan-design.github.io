@@ -14,7 +14,7 @@
 
 <!-- ?v= is a cache-buster: bump the number whenever styles.css changes so browsers
      fetch the new file instead of reusing the copy they already have. -->
-<link rel="stylesheet" href="css/styles.css?v=60">
+<link rel="stylesheet" href="css/styles.css?v=61">
 </head>
 <body>
 
@@ -148,6 +148,7 @@
           <li><a href="#challenge">The Challenge</a></li>
           <li><a href="#goals">Business Goals</a></li>
           <li><a href="#current-state">Current State</a></li>
+          <li><a href="#user-journey">User Journey</a></li>
           <li><a href="#principles">Design Principles</a></li>
           <li><a href="#solution">Solution</a></li>
           <li><a href="#iterations">Iterations</a></li>
@@ -229,6 +230,24 @@
     </div>
   </section>
 
+  <!-- ==================== PROCESS — USER JOURNEY ====================
+       The whole journey sits ahead of the principles and the solution, so
+       everything after it reads as a part of this flow rather than a
+       standalone screen. -->
+  <section class="cs-section" id="user-journey">
+    <div>
+      <div class="cs-label">Process</div>
+      <h2 class="cs-h2">The user journey, before and after</h2>
+    </div>
+    <div class="cs-stack" data-reveal>
+      <p class="cs-body">In the legacy flow, 4 out of 9 steps were dependent on admin. Partners could do nothing until it was all done. Now, account set-up is automated and referral starts immediately. Verification is self-paced but not optional, as it blocks withdrawal of earnings.</p>
+      <figure class="cs-figure cs-figure--plain">
+        <img src="assets/pepperstone/user-flow.png" alt="Flow diagram comparing the legacy all-or-nothing onboarding, which takes two days to first referral, with the new delayed-verification flow, which reaches first referral in one minute by automating rebate account set-up and deferring KYC and the questionnaire until withdrawal. Edge cases are marked for company-type partners, special licence handling, and the reapplication path after a rejected review." loading="lazy" decoding="async" width="1520" height="625">
+        <figcaption class="cs-caption">Legacy vs. new partner onboarding journey</figcaption>
+      </figure>
+    </div>
+  </section>
+
   <!-- ==================== PROCESS — DESIGN PRINCIPLES ==================== -->
   <section class="cs-section" id="principles">
     <div>
@@ -277,18 +296,6 @@
   <section class="cs-section" id="solution">
     <div>
       <h2 class="cs-h2">Solution</h2>
-    </div>
-
-    <!-- The whole journey first, then the screens that make it up — so the
-         four solutions below read as parts of one flow rather than
-         standalone screens. -->
-    <div class="cs-stack" data-reveal>
-      <h3 class="cs-h3">The user journey, before and after</h3>
-      <p class="cs-body">In the legacy flow, 4 out of 9 steps were dependent on admin. Partners could do nothing until it was all done. Now, account set-up is automated and referral starts immediately. Verification is self-paced but not optional, as it blocks withdrawal of earnings.</p>
-      <figure class="cs-figure cs-figure--plain">
-        <img src="assets/pepperstone/user-flow.png" alt="Flow diagram comparing the legacy all-or-nothing onboarding, which takes two days to first referral, with the new delayed-verification flow, which reaches first referral in one minute by automating rebate account set-up and deferring KYC and the questionnaire until withdrawal. Edge cases are marked for company-type partners, special licence handling, and the reapplication path after a rejected review." loading="lazy" decoding="async" width="1520" height="625">
-        <figcaption class="cs-caption">Legacy vs. new partner onboarding journey</figcaption>
-      </figure>
     </div>
 
     <div class="cs-solution" data-reveal>

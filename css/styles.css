@@ -1564,8 +1564,6 @@ h1, h2, h3, p { margin: 0; }
    sections on these pages do the same job with inline margins on their
    wrappers; this keeps it in one place now the pattern repeats. */
 .cs-stack + .cs-stack { margin-top: 56px; }
-/* Matches the gap the solution blocks already keep between themselves. */
-.cs-stack + .cs-solution { margin-top: 96px; }
 .cs-stack > .cs-body + .cs-body { margin-top: 20px; }
 .cs-stack > .cs-body + .cs-figure,
 .cs-stack > .cs-figure + .cs-body,
