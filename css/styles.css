@@ -1568,8 +1568,7 @@ h1, h2, h3, p { margin: 0; }
 .cs-stack > .cs-body + .cs-figure,
 .cs-stack > .cs-figure + .cs-body,
 .cs-stack > .cs-body + .cs-compare,
-.cs-stack > .cs-iter,
-.cs-stack > .cs-iter + .cs-body { margin-top: 32px; }
+.cs-stack > .cs-iter { margin-top: 32px; }
 
 /* ---------- Before/after compare slider ----------
    Two screenshots stacked in one frame; the top one is clipped at --pos so
@@ -1816,38 +1815,9 @@ h1, h2, h3, p { margin: 0; }
 .cs-iter-panel { display: none; margin-top: 32px; }
 .cs-iter-panel.is-active { display: block; }
 /* The global reset zeroes heading and paragraph margins, so the panel sets
-   its own rhythm between the title, the summary and the two lists. */
+   its own gap between the title and the summary. */
 .cs-iter-panel .cs-h4 { margin-bottom: 10px; }
-.cs-iter-panel > p { max-width: 640px; margin-bottom: 24px; }
-.cs-iter-cols {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-}
-.cs-iter-list { list-style: none; margin: 0; padding: 0; }
-.cs-iter-list li {
-  position: relative;
-  padding-left: 22px;
-  margin-bottom: 8px;
-  font-size: var(--text-body-sm-size);
-  line-height: var(--text-body-sm-line);
-  color: var(--color-text-secondary);
-}
-.cs-iter-list li::before {
-  position: absolute;
-  left: 0;
-  font-family: var(--font-mono);
-}
-.cs-iter-list--pro li::before { content: "+"; color: var(--tag-blue-fg); }
-.cs-iter-list--con li::before { content: "−"; color: var(--color-red); }
-.cs-iter-list-label {
-  font-family: var(--font-mono);
-  font-size: var(--text-caption-size);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--color-ink);
-  margin-bottom: 8px;
-}
+.cs-iter-panel > p { max-width: 640px; }
 
 @media (prefers-reduced-motion: reduce) {
   .cs-iter-stage img { transition: none; }
@@ -1890,8 +1860,6 @@ h1, h2, h3, p { margin: 0; }
   .cs-quote { padding-left: 20px; margin-top: 32px; }
   .cs-quote p { font-size: 22px; line-height: 32px; }
   .cs-principles { gap: 32px; }
-  /* What worked / what didn't stack rather than sit in two narrow columns. */
-  .cs-iter-cols { grid-template-columns: 1fr; gap: 20px; }
   .cs-compare { aspect-ratio: 4 / 3; }
   .cs-compare-label { top: 10px; padding: 5px 10px; }
   .cs-compare-label--before { left: 10px; }
