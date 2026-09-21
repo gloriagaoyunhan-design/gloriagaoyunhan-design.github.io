@@ -14,7 +14,7 @@
 
 <!-- ?v= is a cache-buster: bump the number whenever styles.css changes so browsers
      fetch the new file instead of reusing the copy they already have. -->
-<link rel="stylesheet" href="css/styles.css?v=61">
+<link rel="stylesheet" href="css/styles.css?v=62">
 </head>
 <body>
 
@@ -353,89 +353,109 @@
        verification steps are tracked from then on. The stepper below is
        driven by section 13 of js/script.js. -->
   <section class="cs-section" id="iterations">
-    <div class="cs-stack" data-reveal>
+    <div data-reveal>
       <div class="cs-label">Iterations</div>
-      <h2 class="cs-h2">Working out the hand-off</h2>
-      <p class="cs-body">Registration now finishes in seconds, but two things behind it do not: the rebate account takes a minute or two to provision, and identity verification is a separate review again. That left a gap to design for — what a partner sees between “I’ve signed up” and “I can actually refer someone”.</p>
+      <h2 class="cs-h2">Fine-tuning the moment</h2>
     </div>
 
     <div class="cs-stack" data-reveal>
-      <h3 class="cs-h3">Where the partner lands after registering</h3>
-      <p class="cs-body">Four passes at the same moment, each making a different trade between handing over the referral link early and being honest about the set-up still running.</p>
+      <h3 class="cs-h3">Designing for waiting</h3>
+      <p class="cs-body">I initially assumed the referral link would be ready the moment registration ended. In tech review, the developers flagged that account set-up runs in several steps and can take 1–2 minutes, so the wait needed a screen that sets expectations.</p>
 
       <div class="cs-iter" data-iter>
-        <div>
-          <div class="cs-iter-stage">
+        <div class="cs-iter-stage">
             <img data-iter-shot class="is-active" src="assets/pepperstone/completion-iteration-1.png" alt="Iteration one: a success screen headed “Start referring clients and earning rebates”, with the referral link and a copy button shown immediately, followed by a “Next step: verify your profile” block listing withdrawal and higher tier benefits" loading="lazy" decoding="async" width="1920" height="1012">
             <img data-iter-shot src="assets/pepperstone/completion-iteration-2.png" alt="Iteration two: a blocking screen with a spinner reading “We are setting up your account”, explaining the one to two minute wait and offering a single button to explore the portal" loading="lazy" decoding="async" width="1920" height="1012">
             <img data-iter-shot src="assets/pepperstone/completion-iteration-3.png" alt="Iteration three: the full partner dashboard with a seventy-five per cent progress banner across the top, every metric reading zero and both tables empty" loading="lazy" decoding="async" width="1920" height="1012">
-            <img data-iter-shot src="assets/pepperstone/completion-iteration-4.png" alt="Iteration four: a dedicated progress screen at fifty per cent with an itemised checklist — referral link created, user profile created, creating rebate account, set up dashboard" loading="lazy" decoding="async" width="1920" height="1080">
-          </div>
-          <div class="cs-iter-track">
+            <img data-iter-shot src="assets/pepperstone/completion-iteration-4.png?v=2" alt="Iteration four: a dedicated progress screen at fifty per cent with an itemised checklist — referral link created, user profile created, creating rebate account, set up dashboard" loading="lazy" decoding="async" width="1920" height="1012">
+        </div>
+        <div class="cs-iter-track">
+          <div class="cs-iter-rail">
+            <span class="cs-iter-dot" aria-hidden="true"></span>
+            <span class="cs-iter-dot" aria-hidden="true"></span>
+            <span class="cs-iter-dot" aria-hidden="true"></span>
+            <span class="cs-iter-dot" aria-hidden="true"></span>
             <input class="cs-iter-range" type="range" min="1" max="4" step="1" value="1" data-iter-range aria-label="Step through the four iterations">
-            <div class="cs-iter-ticks">
-              <button type="button" class="cs-iter-tick is-active" data-iter-tick aria-pressed="true">01</button>
-              <button type="button" class="cs-iter-tick" data-iter-tick aria-pressed="false">02</button>
-              <button type="button" class="cs-iter-tick" data-iter-tick aria-pressed="false">03</button>
-              <button type="button" class="cs-iter-tick" data-iter-tick aria-pressed="false">04</button>
-            </div>
+          </div>
+          <div class="cs-iter-ticks">
+              <button type="button" class="cs-iter-tick is-active" data-iter-tick aria-pressed="true"><span class="cs-iter-tick-word">Iteration</span> <span class="cs-iter-tick-num">01</span></button>
+              <button type="button" class="cs-iter-tick" data-iter-tick aria-pressed="false"><span class="cs-iter-tick-word">Iteration</span> <span class="cs-iter-tick-num">02</span></button>
+              <button type="button" class="cs-iter-tick" data-iter-tick aria-pressed="false"><span class="cs-iter-tick-word">Iteration</span> <span class="cs-iter-tick-num">03</span></button>
+              <button type="button" class="cs-iter-tick" data-iter-tick aria-pressed="false"><span class="cs-iter-tick-word">Iteration</span> <span class="cs-iter-tick-num">04</span></button>
           </div>
         </div>
-
-        <div>
           <div class="cs-iter-panel is-active" data-iter-panel>
-            <div class="cs-iter-num">Iteration 01</div>
             <h4 class="cs-h4">Link first, verification as an upgrade</h4>
             <p class="cs-body-sm">Hands over the referral link the moment registration completes, and frames the remaining verification as unlocking withdrawals and higher tiers rather than as a gate.</p>
-            <div class="cs-iter-list-label">What worked</div>
-            <ul class="cs-iter-list cs-iter-list--pro">
-              <li class="cs-todo">To write.</li>
-            </ul>
-            <div class="cs-iter-list-label">What didn’t</div>
-            <ul class="cs-iter-list cs-iter-list--con">
-              <li class="cs-todo">To write.</li>
-            </ul>
+            <div class="cs-iter-cols">
+              <div>
+                <div class="cs-iter-list-label">What worked</div>
+                <ul class="cs-iter-list cs-iter-list--pro">
+                  <li class="cs-todo">To write.</li>
+                </ul>
+              </div>
+              <div>
+                <div class="cs-iter-list-label">What didn’t</div>
+                <ul class="cs-iter-list cs-iter-list--con">
+                  <li class="cs-todo">To write.</li>
+                </ul>
+              </div>
+            </div>
           </div>
           <div class="cs-iter-panel" data-iter-panel>
-            <div class="cs-iter-num">Iteration 02</div>
             <h4 class="cs-h4">Hold the partner until set-up finishes</h4>
             <p class="cs-body-sm">Acknowledges the provisioning wait directly, names how long it takes and promises an email — but parks the partner on a dead-end screen while it runs.</p>
-            <div class="cs-iter-list-label">What worked</div>
-            <ul class="cs-iter-list cs-iter-list--pro">
-              <li class="cs-todo">To write.</li>
-            </ul>
-            <div class="cs-iter-list-label">What didn’t</div>
-            <ul class="cs-iter-list cs-iter-list--con">
-              <li class="cs-todo">To write.</li>
-            </ul>
+            <div class="cs-iter-cols">
+              <div>
+                <div class="cs-iter-list-label">What worked</div>
+                <ul class="cs-iter-list cs-iter-list--pro">
+                  <li class="cs-todo">To write.</li>
+                </ul>
+              </div>
+              <div>
+                <div class="cs-iter-list-label">What didn’t</div>
+                <ul class="cs-iter-list cs-iter-list--con">
+                  <li class="cs-todo">To write.</li>
+                </ul>
+              </div>
+            </div>
           </div>
           <div class="cs-iter-panel" data-iter-panel>
-            <div class="cs-iter-num">Iteration 03</div>
             <h4 class="cs-h4">Wait inside the dashboard</h4>
             <p class="cs-body-sm">Drops the partner straight into the portal with the set-up running as a banner, so the wait is spent somewhere useful — at the cost of a first impression made entirely of zeros and empty tables.</p>
-            <div class="cs-iter-list-label">What worked</div>
-            <ul class="cs-iter-list cs-iter-list--pro">
-              <li class="cs-todo">To write.</li>
-            </ul>
-            <div class="cs-iter-list-label">What didn’t</div>
-            <ul class="cs-iter-list cs-iter-list--con">
-              <li class="cs-todo">To write.</li>
-            </ul>
+            <div class="cs-iter-cols">
+              <div>
+                <div class="cs-iter-list-label">What worked</div>
+                <ul class="cs-iter-list cs-iter-list--pro">
+                  <li class="cs-todo">To write.</li>
+                </ul>
+              </div>
+              <div>
+                <div class="cs-iter-list-label">What didn’t</div>
+                <ul class="cs-iter-list cs-iter-list--con">
+                  <li class="cs-todo">To write.</li>
+                </ul>
+              </div>
+            </div>
           </div>
           <div class="cs-iter-panel" data-iter-panel>
-            <div class="cs-iter-num">Iteration 04</div>
             <h4 class="cs-h4">Name each step as it completes</h4>
             <p class="cs-body-sm">Breaks the wait into the work actually happening — link, profile, rebate account, dashboard — so progress is legible instead of an unexplained spinner.</p>
-            <div class="cs-iter-list-label">What worked</div>
-            <ul class="cs-iter-list cs-iter-list--pro">
-              <li class="cs-todo">To write.</li>
-            </ul>
-            <div class="cs-iter-list-label">What didn’t</div>
-            <ul class="cs-iter-list cs-iter-list--con">
-              <li class="cs-todo">To write.</li>
-            </ul>
+            <div class="cs-iter-cols">
+              <div>
+                <div class="cs-iter-list-label">What worked</div>
+                <ul class="cs-iter-list cs-iter-list--pro">
+                  <li class="cs-todo">To write.</li>
+                </ul>
+              </div>
+              <div>
+                <div class="cs-iter-list-label">What didn’t</div>
+                <ul class="cs-iter-list cs-iter-list--con">
+                  <li class="cs-todo">To write.</li>
+                </ul>
+              </div>
+            </div>
           </div>
-        </div>
       </div>
 
       <p class="cs-body cs-todo">Decision and trade-off — to write: which iteration shipped, and what it gave up in exchange. This is the paragraph the portfolio panel is looking for, so name the alternatives, the reason for the call, and who was in the room for it.</p>
@@ -633,6 +653,6 @@
 
 </div>
 
-<script src="js/script.js?v=57"></script>
+<script src="js/script.js?v=58"></script>
 </body>
 </html>

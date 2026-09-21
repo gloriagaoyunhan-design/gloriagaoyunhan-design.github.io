@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Media opens a lightbox on click, so it gets the same ring feedback a
     // link does — the CSS cursor:zoom-in never shows while cursor:none is on.
-    const HOVER_TARGETS = 'a, button, .cs-figure img, .cs-figure video';
+    const HOVER_TARGETS = 'a, button, .cs-figure img, .cs-figure video, .cs-iter-stage img.is-active';
     document.addEventListener('mouseover', (e) => {
       if (e.target.closest(HOVER_TARGETS)) ring && ring.classList.add('is-active');
     });
@@ -459,7 +459,7 @@ document.addEventListener('DOMContentLoaded', () => {
      Closes on the X, on the backdrop, and on Escape. The enlarged copy is a
      fresh element each time rather than the page's own moved into place —
      moving it would leave a hole in the article behind the overlay. */
-  const lightboxTargets = $$('.cs-figure img, .cs-figure video');
+  const lightboxTargets = $$('.cs-figure img, .cs-figure video, .cs-iter-stage img');
   if (lightboxTargets.length) {
     const lightbox = document.createElement('div');
     lightbox.className = 'lightbox';
@@ -580,7 +580,9 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- 13. Iteration stepper ----------
      Steps through one design iteration at a time: the range is the primary
      control, and each tick is also a button so a reader can jump straight
-     to an iteration rather than dragging past the ones in between. */
+     to an iteration rather than dragging past the ones in between. The
+     screens themselves are lightbox targets (section 10) — only the visible
+     one takes clicks, see .cs-iter-stage img in the stylesheet. */
   $$('[data-iter]').forEach((group) => {
     const range = group.querySelector('[data-iter-range]');
     const shots = Array.from(group.querySelectorAll('[data-iter-shot]'));
@@ -589,6 +591,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!range || !shots.length) return;
 
     function show(index) {
+      // Announced as "Iteration 02" rather than the bare "2" of the range.
+      range.setAttribute('aria-valuetext', 'Iteration 0' + (index + 1));
       shots.forEach((el, i) => el.classList.toggle('is-active', i === index));
       panels.forEach((el, i) => el.classList.toggle('is-active', i === index));
       ticks.forEach((el, i) => {

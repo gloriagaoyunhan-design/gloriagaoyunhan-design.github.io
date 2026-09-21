@@ -1691,19 +1691,18 @@ h1, h2, h3, p { margin: 0; }
 }
 
 /* ---------- Iteration stepper ----------
-   One screen at a time with its own notes beside it, stepped through by a
-   range input with a labelled tick per iteration. Same reasoning as the
-   compare slider: the range is the control, the ticks are buttons so a
-   reader can jump straight to an iteration instead of dragging past it. */
-.cs-iter {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: 40px;
-  align-items: start;
-}
+   One screen at a time, stacked: the screen, then the slider that steps
+   through it, then that iteration's notes. The range input is the real
+   control (drag, arrow keys, screen readers) and sits over a rail of dots,
+   one per iteration, so the unselected ones read as places you can go. The
+   labels underneath are buttons, so a reader can jump straight to an
+   iteration instead of dragging past the ones in between. */
+.cs-iter { display: block; }
 .cs-iter-stage {
   position: relative;
-  aspect-ratio: 16 / 9;
+  /* Every iteration is exported at the same 1920x1012, so the frame matches
+     it exactly and nothing letterboxes. */
+  aspect-ratio: 1920 / 1012;
   background: var(--color-surface);
   border: 1px solid var(--color-stroke);
   overflow: hidden;
@@ -1715,24 +1714,117 @@ h1, h2, h3, p { margin: 0; }
   height: 100%;
   object-fit: contain;
   opacity: 0;
+  /* Faded-out screens still cover the frame, so they must not take the
+     click — it belongs to the one you can see, which opens the lightbox. */
+  pointer-events: none;
   transition: opacity .25s ease;
 }
-.cs-iter-stage img.is-active { opacity: 1; }
-.cs-iter-panel { display: none; }
+.cs-iter-stage img.is-active { opacity: 1; pointer-events: auto; cursor: zoom-in; }
+
+/* Track: a rail of four dots with the range laid over it, labels below.
+   The dots sit at 12.5%, 37.5%, 62.5% and 87.5% — the centres of four
+   equal columns — and the range is inset and widened by the thumb's
+   radius so its thumb lands on those same points at each step. */
+.cs-iter-track { margin-top: 24px; }
+.cs-iter-rail { position: relative; height: 24px; }
+.cs-iter-rail::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 12.5%;
+  right: 12.5%;
+  height: 2px;
+  transform: translateY(-50%);
+  background: var(--color-stroke);
+}
+.cs-iter-dot {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--color-bg);
+  border: 2px solid var(--color-stroke);
+}
+.cs-iter-dot:nth-of-type(1) { left: 12.5%; }
+.cs-iter-dot:nth-of-type(2) { left: 37.5%; }
+.cs-iter-dot:nth-of-type(3) { left: 62.5%; }
+.cs-iter-dot:nth-of-type(4) { left: 87.5%; }
+.cs-iter-range {
+  position: absolute;
+  top: 0;
+  left: calc(12.5% - 9px);
+  width: calc(75% + 18px);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+.cs-iter-range::-webkit-slider-runnable-track { height: 24px; background: transparent; }
+.cs-iter-range::-moz-range-track { height: 24px; background: transparent; }
+.cs-iter-range::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+  border-radius: 50%;
+  background: var(--color-red);
+  border: 2px solid var(--color-bg);
+  box-shadow: 0 1px 6px rgba(26, 23, 20, 0.25);
+  cursor: grab;
+}
+.cs-iter-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-red);
+  border: 2px solid var(--color-bg);
+  cursor: grab;
+}
+.cs-iter-range:focus { outline: none; }
+.cs-iter-range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px rgba(239, 62, 46, 0.35); }
+.cs-iter-range:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px rgba(239, 62, 46, 0.35); }
+
+.cs-iter-ticks {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 8px;
+}
+.cs-iter-tick {
+  padding: 4px 0;
+  border: none;
+  background: none;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-line);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: color .15s;
+}
+.cs-iter-tick:hover { color: var(--color-ink); }
+.cs-iter-tick.is-active { color: var(--color-red); }
+
+/* Notes for the iteration on screen */
+.cs-iter-panel { display: none; margin-top: 32px; }
 .cs-iter-panel.is-active { display: block; }
 /* The global reset zeroes heading and paragraph margins, so the panel sets
    its own rhythm between the title, the summary and the two lists. */
 .cs-iter-panel .cs-h4 { margin-bottom: 10px; }
-.cs-iter-panel > p { margin-bottom: 24px; }
-.cs-iter-num {
-  font-family: var(--font-mono);
-  font-size: var(--text-caption-size);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-red);
-  margin-bottom: 8px;
+.cs-iter-panel > p { max-width: 640px; margin-bottom: 24px; }
+.cs-iter-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
 }
-.cs-iter-list { list-style: none; margin: 0 0 20px; padding: 0; }
+.cs-iter-list { list-style: none; margin: 0; padding: 0; }
 .cs-iter-list li {
   position: relative;
   padding-left: 22px;
@@ -1756,61 +1848,6 @@ h1, h2, h3, p { margin: 0; }
   color: var(--color-ink);
   margin-bottom: 8px;
 }
-
-/* Track sits under the stage, spanning only the image column */
-.cs-iter-track { margin-top: 24px; position: relative; }
-.cs-iter-range {
-  display: block;
-  width: 100%;
-  margin: 0;
-  background: transparent;
-  appearance: none;
-  -webkit-appearance: none;
-  cursor: pointer;
-}
-.cs-iter-range::-webkit-slider-runnable-track {
-  height: 2px;
-  background: var(--color-stroke);
-}
-.cs-iter-range::-moz-range-track { height: 2px; background: var(--color-stroke); }
-.cs-iter-range::-webkit-slider-thumb {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 18px;
-  height: 18px;
-  margin-top: -8px;
-  border-radius: 50%;
-  background: var(--color-red);
-  border: 2px solid var(--color-bg);
-  box-shadow: 0 1px 6px rgba(26, 23, 20, 0.25);
-  cursor: grab;
-}
-.cs-iter-range::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--color-red);
-  border: 2px solid var(--color-bg);
-  cursor: grab;
-}
-.cs-iter-ticks {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 12px;
-}
-.cs-iter-tick {
-  padding: 0;
-  border: none;
-  background: none;
-  font-family: var(--font-mono);
-  font-size: var(--text-caption-size);
-  letter-spacing: 0.06em;
-  color: var(--color-text-secondary);
-  cursor: pointer;
-  transition: color .15s;
-}
-.cs-iter-tick:hover { color: var(--color-ink); }
-.cs-iter-tick.is-active { color: var(--color-red); }
 
 @media (prefers-reduced-motion: reduce) {
   .cs-iter-stage img { transition: none; }
@@ -1853,9 +1890,8 @@ h1, h2, h3, p { margin: 0; }
   .cs-quote { padding-left: 20px; margin-top: 32px; }
   .cs-quote p { font-size: 22px; line-height: 32px; }
   .cs-principles { gap: 32px; }
-  /* Notes drop under the screen they describe; the track keeps its own
-     column so the ticks stay reachable with a thumb. */
-  .cs-iter { grid-template-columns: 1fr; gap: 28px; }
+  /* What worked / what didn't stack rather than sit in two narrow columns. */
+  .cs-iter-cols { grid-template-columns: 1fr; gap: 20px; }
   .cs-compare { aspect-ratio: 4 / 3; }
   .cs-compare-label { top: 10px; padding: 5px 10px; }
   .cs-compare-label--before { left: 10px; }
@@ -1865,6 +1901,9 @@ h1, h2, h3, p { margin: 0; }
 }
 
 @media (max-width: 480px) {
+  /* "Iteration 01" won't fit four across at this width, so the word sits
+     above the number. */
+  .cs-iter-tick-word { display: block; }
   .cs-title { font-size: 32px; line-height: 40px; }
   .cs-h2 { font-size: 24px; line-height: 32px; }
   .cs-h3 { font-size: 20px; line-height: 28px; }
