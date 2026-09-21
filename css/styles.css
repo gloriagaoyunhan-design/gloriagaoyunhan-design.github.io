@@ -1464,6 +1464,15 @@ h1, h2, h3, p { margin: 0; }
    thing before the figure instead of a paragraph. */
 .cs-solution .cs-jargon { margin-bottom: 32px; }
 
+/* ---------- Collage ----------
+   A justified two-row layout for boards of different shapes. Each tile
+   grows in proportion to its own aspect ratio (--ar, set in the markup),
+   which is exactly what makes every tile in a row the same height — so the
+   rows come out flush without cropping or distorting anything. */
+.cs-collage { display: flex; flex-direction: column; gap: 16px; }
+.cs-collage-row { display: flex; gap: 16px; }
+.cs-collage-row > .cs-figure { flex: var(--ar) 1 0%; min-width: 0; }
+
 /* ---------- Numbered principles ---------- */
 .cs-principles {
   list-style: none;
