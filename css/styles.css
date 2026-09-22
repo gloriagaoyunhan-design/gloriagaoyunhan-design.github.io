@@ -1122,6 +1122,14 @@ h1, h2, h3, p { margin: 0; }
   .hero-title { font-size: 56px; }
   .hero-subtitle { font-size: 19px; line-height: 26px; }
   .hero-flourish { font-size: 16px; top: -12px; }
+  /* At the 120px desktop size, "100%" alone is wider than a phone screen —
+     it can't wrap (no break opportunity inside the digits), so the row
+     doesn't shrink to fit, it overflows past the edge while the label gets
+     squeezed into a narrow, many-line stack beside it. Scaling the count
+     down and tightening the padding gives both room to actually fit. */
+  .preloader { padding: 24px; }
+  .preloader-count { font-size: 56px; }
+  .preloader-bar { margin-top: 20px; }
   .rotating-banner { height: 220px; min-height: 220px; }
   .rotating-banner-panel { width: 220px; height: 220px; min-width: 220px; min-height: 220px; }
   .about-heading { font-size: 26px; line-height: 34px; }
